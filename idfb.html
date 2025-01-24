@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee ID Card Generator</title>
+    <link rel="icon" type="image/png" href="ICO.PNG">
+
+  <style>
+    /* General styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, sandybrown,lightgreen,lightcyan);
+
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    header, footer {
+        width: 100%;
+        background-color: sandybrown;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        position: fixed;
+        left: 0;
+    }
+
+    header {
+        top: 0;
+    }
+
+    footer {
+        bottom: 0;
+    }
+
+    main {
+        margin-top: 60px;
+        margin-bottom: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+        padding: 20px;
+    }
+
+    .container {
+        background: linear-gradient(50deg, #ff7e5f, #feb47b , white  70%);
+
+        color: black;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-height: 70vh;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container h2 {
+        margin-bottom: 20px;
+    }
+
+    .container p {
+        margin-bottom: 20px;
+    }
+
+    .container input, .container select, .container textarea {
+        width: 80%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .container button {
+        width: 50%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    .button-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .card-container {
+        display: none;
+    }
+
+    .form-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .form-container .form {
+        width: 42%;
+        background: linear-gradient(to right, #a18cd1, #fbc2eb);
+
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .id-card-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background: linear-gradient(to right, white, lightgreen,lightcyan,);
+
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    /* Card wrapper styles */
+    .card-wrapper {
+        padding: 20px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 20px auto;
+        max-height: 70%;
+        width: 70%;
+    }
+
+    .id-card, .id-card-back, .search-result {
+        width: 85mm;
+        height: 53mm;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-size: cover;
+        position: relative;
+        color: #000;
+        text-align: center;
+        background: linear-gradient(to right,  #008080, #00ffff, #90ee90);
+
+    }
+
+    .id-card img, .id-card-back img, .search-result img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+
+    .company-name {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 20px;
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    .id-card-details, .id-card-back-details {
+        margin-top: 70px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 0 10px;
+    }
+
+    .id-card-details div, .id-card-back-details div {
+        width: 48%;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+
+    .id-card-details h3, .id-card-back-details h3 {
+        margin: 0;
+        color: #007bff;
+        background-color: #e0f7fa;
+        padding: 2px;
+        border-radius: 3px;
+    }
+
+    .id-card-details p, .id-card-back-details p {
+        margin: 0;
+        color: #000;
+        background-color: ;
+        padding: 2px;
+        border-radius: 3px;
+    }
+
+    .signature-box {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 57px;
+        border: 1px solid #000;
+        text-align: center;
+    }
+
+    .signature {
+        width: 100%;
+        height: 50%;
+        position: a;
+    }
+
+    @media (max-width: 768px) {
+        .form-container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-container .form {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .id-card, .id-card-back, .search-result {
+            width: 100%;
+            height: auto;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <header>
+        <h1>Employee ID Card Generator</h1>
+    </header>
+    <main>
+        <div class="alert" id="alert">ID Card Generated Successfully!</div>
+        <div class="container" id="introContainer">
+            <h2>Welcome to the Employee ID Card Generator</h2>
+            <p>Create professional ID cards for your employees easily. Login to get started.</p>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="button" onclick="login()">Login</button>
+        </div>
+        <div class="container card-container">
+            <div class="form-container">
+                <form class="form" id="frontForm">
+                    <h2>Front of ID Form</h2>
+                    <input type="text" id="companyName" placeholder="Company Name" required>
+                    <input type="text" id="empName" placeholder="Employee Name" required>
+                    <input type="text" id="empTitle" placeholder="Job Title" required>
+                    <input type="date" id="issDate" placeholder="ISS Date" required>
+                    <input type="text" id="sex" placeholder="Sex" required>
+                    <input type="text" id="workerLevel" placeholder="Worker Level" required>
+                    <input type="text" id="countryName" placeholder="Country Name" required>
+                    <input type="text" id="currentLocation" placeholder="Current Location" required>
+                    <input type="file" id="empPhoto" accept="image/*" required>
+                    <label for="bgColor">Choose Background Color:</label>
+                    <select id="bgColor">
+                        <option value="linear-gradient(to right, #ffffff, #e0e0ff)">Light Blue Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #ffe0e0)">Light Red Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #e0ffe0)">Light Green Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #f0f0f0)">Light Gray Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #ffc0cb)">Pink Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #ffb6c1)">Light Pink Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #d3ffce)">Light Mint Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #c0c0c0)">Silver Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #f5f5dc)">Beige Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #fff8dc)">Cornsilk Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #faebd7)">Antique White Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #ffebcd)">Blanched Almond Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #ffe4e1)">Misty Rose Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #f0fff0)">Honeydew Gradient</option>
+                        <option value="linear-gradient(to right, #ffffff, #e6e6fa)">Lavender Gradient</option>
+                    </select>
+                    <label for="bgImage">Choose Card Background Image:</label>
+                    <input type="file" id="bgImage" accept="image/*">
+                    <label for="containerBgImage">Choose Container Background Image:</label>
+                    <input type="file" id="containerBgImage" accept="image/*">
+                    <button type="button" onclick="generateCard()">Generate ID Card</button>
+                </form>
+                <form class="form" id="backForm">
+                    <h2>Back of ID Form</h2>
+                    <input type="text" id="topic" placeholder="Topic" required>
+                    <textarea id="body" placeholder="Enter up to 30 words" maxlength="150" required></textarea>
+                    <input type="file" id="signature" accept="image/*" required>
+                </form>
+            </div>
+            <div class="id-card-container" id="idCardContainer">
+                <!-- Add new container (card-wrapper) that wraps the card elements -->
+                <div class="card-wrapper" id="cardWrapperFront">
+                    <div class="id-card" id="idCard">
+                        <div class="company-name" id="companyDisplay">YFS CYM @#$</div>
+                        <img id="photo" src="#" alt="Employee Photo">
+                        <div class="id-card-details">
+                            <div>
+                                <h3 id="cardName"></h3>
+                                <p id="cardTitle"></p>
+                            </div>
+                            <div>
+                                <p>ID: <span id="cardID"></span></p>
+                            </div>
+                            <div>
+                                <p>Date: <span id="cardIssDate"></span></p>
+                            </div>
+                            <div>
+                                <p>Sex: <span id="cardSex"></span></p>
+                            </div>
+                            <div>
+                                <p>Level: <span id="cardWorkerLevel"></span></p>
+                            </div>
+                            <div>
+                                <p>Country: <span id="cardCountryName"></span></p>
+                            </div>
+                            <div>
+                                <p>Location: <span id="cardCurrentLocation"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-wrapper" id="cardWrapperBack">
+                    <div class="id-card-back" id="idCardBack">
+                       <h2> <div class="topic" id="cardTopic">Topic</div></h2>
+                        <div class="body" id="cardBody">Body</div>
+                        <div class="signature-box">
+                            <img id="cardSignature" class="signature" src="#" alt="Signature">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-wrapper">
+                <button onclick="downloadCard('cardWrapperFront')">Download Front ID Card</button>
+                <button onclick="downloadCard('cardWrapperBack')">Download Back ID Card</button>
+            </div>
+        </div>
+        <div class="container search-container">
+            <form class="form">
+                <h2>Search ID Card</h2>
+                <input type="text" id="searchEmpName" placeholder="Employee Name" required>
+                <button type="button" onclick="searchCard()">Search</button>
+            </form>
+            <div class="id-card search-result" id="searchResultCard">
+                <div class="company-name">YFS CYM @#$</div>
+                <img id="searchPhoto" src="#" alt="Employee Photo">
+                <div class="id-card-details">
+                    <div>
+                        <h3 id="searchCardName"></h3>
+                        <p id="searchCardTitle"></p>
+                    </div>
+                    <div>
+                        <p>ID: <span id="searchCardID"></span></p>
+                    </div>
+                    <div>
+                        <p>Date: <span id="searchCardIssDate"></span></p>
+                    </div>
+                    <div>
+                        <p>Sex: <span id="searchCardSex"></span></p>
+                    </div>
+                    <div>
+                        <p>Level: <span id="searchCardWorkerLevel"></span></p>
+                    </div>
+                    <div>
+                        <p>Country: <span id="searchCardCountryName"></span></p>
+                    </div>
+                    <div>
+                        <p>Location: <span id="searchCardCurrentLocation"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Employee ID Card Generator</p>
+    </footer>
+    <script>
+        let isLoggedIn = false;
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username === 'a' && password === 'a') {
+                isLoggedIn = true;
+                document.getElementById('introContainer').style.display = 'none';
+                document.querySelector('.card-container').style.display = 'block';
+                document.querySelector('.search-container').style.display = 'block';
+            } else {
+                alert('Invalid username or password');
+            }
+        }
+
+        function generateCard() {
+            if (!isLoggedIn) {
+                alert('You must be logged in to generate the card.');
+                return;
+            }
+
+            const companyName = document.getElementById('companyName').value;
+            const empName = document.getElementById('empName').value;
+            const empTitle = document.getElementById('empTitle').value;
+            const empID = 'ID' + Date.now(); // Generate unique ID based on timestamp
+            const issDate = document.getElementById('issDate').value;
+            const sex = document.getElementById('sex').value;
+            const workerLevel = document.getElementById('workerLevel').value;
+            const countryName = document.getElementById('countryName').value;
+            const currentLocation = document.getElementById('currentLocation').value;
+            const empPhoto = document.getElementById('empPhoto').files[0];
+            const bgColor = document.getElementById('bgColor').value;
+            const bgImage = document.getElementById('bgImage').files[0];
+            const containerBgImage = document.getElementById('containerBgImage').files[0];
+            const topic = document.getElementById('topic').value;
+            const body = document.getElementById('body').value;
+            const signature = document.getElementById('signature').files[0];
+
+            if (empPhoto) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('photo').src = e.target.result;
+                };
+                reader.readAsDataURL(empPhoto);
+            }
+
+            if (signature) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('cardSignature').src = e.target.result;
+                };
+                reader.readAsDataURL(signature);
+            }
+
+            if (bgImage) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('idCard').style.backgroundImage = `url(${e.target.result})`;
+                    document.getElementById('idCardBack').style.backgroundImage = `url(${e.target.result})`;
+                };
+                reader.readAsDataURL(bgImage);
+            } else {
+                document.getElementById('idCard').style.background = bgColor;
+                document.getElementById('idCardBack').style.background = bgColor;
+            }
+
+            if (containerBgImage) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('idCardContainer').style.backgroundImage = `url(${e.target.result})`;
+                };
+                reader.readAsDataURL(containerBgImage);
+            }
+
+            document.getElementById('companyDisplay').textContent = companyName;
+            document.getElementById('cardName').textContent = empName;
+            document.getElementById('cardTitle').textContent = empTitle;
+            document.getElementById('cardID').textContent = empID;
+            document.getElementById('cardIssDate').textContent = issDate;
+            document.getElementById('cardSex').textContent = sex;
+            document.getElementById('cardWorkerLevel').textContent = workerLevel;
+            document.getElementById('cardCountryName').textContent = countryName;
+            document.getElementById('cardCurrentLocation').textContent = currentLocation;
+
+            document.getElementById('cardTopic').textContent = topic;
+            document.getElementById('cardBody').textContent = body;
+
+            document.getElementById('idCard').style.display = 'block';
+            document.getElementById('idCardBack').style.display = 'block';
+
+            // Save to local storage
+            const cardData = {
+                companyName, empName, empTitle, empID, issDate, sex,
+                workerLevel, countryName, currentLocation,
+                photoSrc: document.getElementById('photo').src, bgColor,
+                bgImageSrc: bgImage ? document.getElementById('idCard').style.backgroundImage.slice(5, -2) : null,
+                topic, body, signatureSrc: document.getElementById('cardSignature').src,
+                containerBgImageSrc: containerBgImage ? document.getElementById('idCardContainer').style.backgroundImage.slice(5, -2) : null
+            };
+            localStorage.setItem(empID, JSON.stringify(cardData));
+
+            // Display alert
+            const alert = document.getElementById('alert');
+            alert.textContent = 'ID Card Generated Successfully!';
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+        }
+
+        function downloadCard(wrapperId) {
+            if (!isLoggedIn) {
+                alert('You must be logged in to download the card.');
+                return;
+            }
+
+            const cardElement = document.getElementById(wrapperId);
+
+            // Ensure images are rendered before capturing
+            const imgElements = [...cardElement.getElementsByTagName('img')];
+            const imgPromises = imgElements.map(img => new Promise(resolve => {
+                if (img.complete) {
+                    resolve();
+                } else {
+                    img.onload = resolve;
+                }
+            }));
+
+            Promise.all(imgPromises).then(() => {
+                html2canvas(cardElement).then(canvas => {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png');
+                    link.download = `${wrapperId}.png`;
+                    link.click();
+                });
+            });
+        }
+
+        function searchCard() {
+            const searchEmpName = document.getElementById('searchEmpName').value;
+            const keys = Object.keys(localStorage);
+            let found = false;
+
+            for (let key of keys) {
+                const cardData = JSON.parse(localStorage.getItem(key));
+                if (cardData.empName === searchEmpName) {
+                    found = true;
+                    document.getElementById('searchPhoto').src = cardData.photoSrc;
+                    document.getElementById('searchCardName').textContent = cardData.empName;
+                    document.getElementById('searchCardTitle').textContent = cardData.empTitle;
+                    document.getElementById('searchCardID').textContent = cardData.empID;
+                    document.getElementById('searchCardIssDate').textContent = cardData.issDate;
+                    document.getElementById('searchCardSex').textContent = cardData.sex;
+                    document.getElementById('searchCardWorkerLevel').textContent = cardData.workerLevel;
+                    document.getElementById('searchCardCountryName').textContent = cardData.countryName;
+                    document.getElementById('searchCardCurrentLocation').textContent = cardData.currentLocation;
+                    document.getElementById('searchResultCard').style.background = cardData.bgColor;
+
+                    if (cardData.bgImageSrc) {
+                        document.getElementById('searchResultCard').style.backgroundImage = `url(${cardData.bgImageSrc})`;
+                    } else {
+                        document.getElementById('searchResultCard').style.backgroundImage = '';
+                    }
+
+                    document.getElementById('searchResultCard').style.display = 'block';
+                    break;
+                }
+            }
+
+            if (!found) {
+                alert('Employee not found');
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.7/dist/html2canvas.min.js"></script>
+</body>
+</html>
